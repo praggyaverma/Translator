@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import streamlit as st
+import pandas as pd
+import requests
 from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
@@ -20,32 +22,39 @@ LOGGER = get_logger(__name__)
 
 def run():
     st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
+        page_title="Hi-Namaste",
+        page_icon="🗣",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    st.write("# What are you saying!? 🗣")
+    st.write("This website converts English text to Japanese")
+    st.write("\n\n\n")
 
-    st.sidebar.success("Select a demo above.")
+    query = st.text_input("Enter your text:")
+    if not query:
+        st.write("Please enter some text.")
+        return
+    
+    url = "https://google-translate113.p.rapidapi.com/api/v1/translator/text"
 
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
+    payload = {
+        "from": "en",
+        "to": "ja",
+        "text": query
+    }
+    headers = {
+        "content-type": "application/x-www-form-urlencoded",
+        "X-RapidAPI-Key": "3b12f85ebamsh6d9bbe02db68b56p1bee67jsn8012f0c52329",
+        "X-RapidAPI-Host": "google-translate113.p.rapidapi.com"
+    }
+
+    response = requests.post(url, data=payload, headers=headers)
+    response_json = response.json()
+    japanese_text = response_json.get("trans", "")
+
+    st.write(japanese_text)
 
 
 if __name__ == "__main__":
     run()
+
