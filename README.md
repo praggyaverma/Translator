@@ -1,7 +1,4 @@
-# Welcome to streamlit
+# Welcome to Translator
+This web application was created with help from Streamlit.
 
-This is the app you get when you run `streamlit hello`, extracted as its own app.
-
-Edit [Hello.py](./Hello.py) to customize this app to your heart's desire. ❤️
-
-Check it out on [Streamlit Community Cloud](https://st-hello-app.streamlit.app/)
+This web application is my submission to MLH All Month Hackathon. I learnt new technologies and focused more on up skilling myself.
